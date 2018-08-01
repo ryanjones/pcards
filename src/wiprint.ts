@@ -82,10 +82,26 @@ const printWorkItems = {
               return Q.all(pages);
             })
             .then((pages: any) => {
-              const items = document.createElement("div");
-              items.setAttribute("id", "workitems");
-              pages.forEach(page => (items.innerHTML += page));
-              document.body.appendChild(items);
+              const workItems = document.createElement("div");
+              // all work items
+              workItems.setAttribute("id", "workitems");
+              // container for item and sizing boxes
+              let cardContainer = document.createElement("div");
+              cardContainer.setAttribute("id", "sizing-box");
+              cardContainer.style.border = "thick solid #00FFFF";
+              cardContainer.style.overflow = "hidden";
+              // work sizing box
+              let sizingBox = document.createElement("div");
+              sizingBox.setAttribute("id", "sizing-box");
+              sizingBox.setAttribute("style", "border:thick solid #00FFFF;float:left");
+
+              pages.forEach(page => {
+                  cardContainer.innerHTML += page;
+                  cardContainer.innerHTML += sizingBox.innerHTML;
+                  workItems.innerHTML += cardContainer.innerHTML;
+                  cardContainer.innerHTML = "";
+              });
+              document.body.appendChild(workItems);
 
               setTimeout(() => {
                 window.focus(); // needed for IE
@@ -93,7 +109,7 @@ const printWorkItems = {
                 if (!ieprint) {
                   (window as any).print();
                 }
-                items.parentElement.removeChild(items);
+                workItems.parentElement.removeChild(workItems);
               }, 1000);
             });
         },
@@ -205,7 +221,7 @@ function prepare(workItems: Models.WorkItem[]) {
           allFields: Models.WorkItemField[]
         ) => {
           let insertText =
-            `<div class="item"><h2>${item.fields["System.WorkItemType"]} ` +
+            `<div class="item" style="border:thick solid #0000FF; width:400px; float:left;"><h2>${item.fields["System.WorkItemType"]} ` +
             `${item.id} - ${item.fields["System.Title"]}</h2>`;
           fields.forEach(field => {
             const fieldRef = allFields.filter(
