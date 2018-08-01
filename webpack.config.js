@@ -2,6 +2,7 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
+    mode: "none",
     target: "web",
     entry: {
         wiprint: "./src/wiprint.ts",
@@ -21,22 +22,27 @@ module.exports = {
     ],
     resolve: {
         extensions: ["*",".webpack.js", ".web.js", ".ts", ".tsx", ".js"],
-        modules: [path.resolve("./src"),"node_modules"]
+        modules: [path.resolve("./src"),"node_modules"],
     },
     module: {
         rules: [
             {
-                test: /\.tsx?$/,
-                enforce: "pre",
-                loader: "tslint-loader",
-                options: {
-                    emitErrors: true,
-                    failOnHint: true
-                }
+                test: /\.ts$/,
+                enforce: 'pre',
+                use: [
+                    {
+                        loader: 'tslint-loader',
+                        options: { emitErrors: true, failOnHint:true}
+                    }
+                ]
+            },
+            { 
+                test: /\.handlebars$/, 
+                loader: "handlebars-loader" 
             },
             {
-                test: /\.tsx?$/,
-                loader: "ts-loader"
+                test: /\.tsx?$/, 
+                loader: "ts-loader" 
             }
         ]
     }

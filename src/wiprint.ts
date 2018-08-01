@@ -2,6 +2,7 @@ import WITClient = require("TFS/WorkItemTracking/RestClient");
 import Models = require("TFS/WorkItemTracking/Contracts");
 import moment = require("moment");
 import Q = require("q");
+const cardTemplate = require("./templates/work-item.handlebars");
 import { ContainerItemStatus } from "VSS/FileContainer/Contracts";
 
 const extensionContext = VSS.getExtensionContext();
@@ -82,6 +83,11 @@ const printWorkItems = {
               return Q.all(pages);
             })
             .then((pages: any) => {
+
+              let card = cardTemplate({
+                username: "test"
+              });
+
               const workItems = document.createElement("div");
               // all work items
               workItems.setAttribute("id", "workitems");
