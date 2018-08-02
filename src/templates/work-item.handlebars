@@ -1,19 +1,17 @@
 <div class="container border">
   <div class="title-and-estimate-container">
     <div class="title-container">
-      <div class="yt-number">
-        <h2>{{number}}</h2>
-      </div>
-      <div class="title">
-        <h3>{{title}}</h3>
+      <div class="title-text">
+        <strong>Title:</strong>{{title}}
       </div>
     </div>
     <div class="estimate-container border"></div>
   </div>
   <div class="userstory-and-discipline-container">
-    <div class="user-story">
-      <p>{{description}}</p>
-    </div>
+    <div class="user-story"> 
+      <strong>Description:</strong><br/>
+      {{description}}
+     </div>
     <div class="discipline-container">
       <div class="discipline">
         <div class="description">Dev</div>
@@ -23,6 +21,23 @@
         <div class="description">UX</div>
         <div class="box border"></div>
       </div>
+    </div>
+  </div>
+  <div class="po-vsts-container">
+    <div class="po border">
+      <strong>Product Owner:</strong>
+    </div>
+    <div class="vsts-number border">
+      <strong>VSTS #:</strong> {{number}}
+    </div>
+  </div>
+  
+  <hr/>
+  
+  <div class="acceptance-criteria-container border">
+    <div class="acceptance-criteria">
+      <strong>Acceptance Criteria:</strong><br/>
+        {{acceptance_criteria}}
     </div>
   </div>
 </div>

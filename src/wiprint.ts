@@ -83,23 +83,22 @@ const printWorkItems = {
               return Q.all(pages);
             })
             .then((pages: any) => {
-
-              let card = cardTemplate({
-                number: "VSTS123",
-                title: "title",
-                description: "description"
-              });
-
               const workItems = document.createElement("div");
-              workItems.setAttribute("id", "workitems");
+              workItems.setAttribute("class", "container border");
 
               pages.forEach(page => {
-                  console.log(page);
+                let card = cardTemplate({
+                  number: page.id,
+                  title: page.title,
+                  description: page.description,
+                  acceptance_criteria: page.acceptance_criteria
+                });
+
+                workItems.innerHTML += card;
               });
               document.body.appendChild(workItems);
-              //document.body.appendChild(card);
 
-                setTimeout(() => {
+              setTimeout(() => {
                 window.focus(); // needed for IE
                 let ieprint = document.execCommand("print", false, null);
                 if (!ieprint) {
@@ -216,91 +215,16 @@ function prepare(workItems: Models.WorkItem[]) {
           history: Models.WorkItemComments,
           allFields: Models.WorkItemField[]
         ) => {
-          let insertText =
-            `<div class="item" style="border:thick solid #0000FF; width:400px; float:left;"><h2>${item.fields["System.WorkItemType"]} ` +
-            `${item.id} - ${item.fields["System.Title"]}</h2>`;
-          fields.forEach(field => {
-            const fieldRef = allFields.filter(
-              f => f.referenceName === field.referenceName
-            )[0];
-            if (item.fields[field.referenceName]) {
-              if (fieldRef.type) {
-                switch (fieldRef.type) {
-                  case Models.FieldType.DateTime:
-                    if (
-                      moment(item.fields[field.referenceName]).diff(
-                        moment(),
-                        "years"
-                      ) < 1000
-                    ) {
-                      insertText += `<p><b>${field.name}:</b> ${moment(
-                        item.fields[field.referenceName]
-                      ).format(localeTime)}</p>`;
-                    }
-                    break;
-                  case Models.FieldType.Html:
-                    insertText += `<p><b>${field.name}:</b> ${item.fields[
-                      field.referenceName
-                    ].htmlize()}</p>`;
-                    break;
-                  case Models.FieldType.History:
-                    if (history.count > 0) {
-                      insertText += `<p><b>${field.name}</b></p>`;
-                      history.comments.forEach(comment => {
-                        if (comment.revisedBy.name) {
-                          insertText += `<div class="history"><b>${moment(
-                            comment.revisedDate
-                          ).format(
-                            localeTime
-                          )} ${comment.revisedBy.name.substring(
-                            0,
-                            comment.revisedBy.name.indexOf("<") - 1
-                          )}:</b><br> ${comment.text.htmlize()}</div>`;
-                        } else {
-                          insertText += `<div class="history"><b>${moment(
-                            comment.revisedDate
-                          ).format(localeTime)} ${
-                            comment.revisedBy.displayName
-                          }:</b><br> ${comment.text.htmlize()}</div>`;
-                        }
-                      });
-                    }
-                    break;
-                  default:
-                    insertText += `<p><b>${field.name}:</b> ${
-                      item.fields[field.referenceName]
-                    }</p>`;
-                    break;
-                }
-              } else {
-                insertText += `<p><b>${field.name}:</b> ${
-                  item.fields[field.referenceName]
-                }</p>`;
-              }
-            } else if (field.referenceName === "System.History") {
-              if (history.count > 0) {
-                insertText += `<p><b>${field.name}</b></p>`;
-                history.comments.forEach(comment => {
-                  if (comment.revisedBy.name) {
-                    insertText += `<div class="history"><b>${moment(
-                      comment.revisedDate
-                    ).format(localeTime)} ${comment.revisedBy.name.substring(
-                      0,
-                      comment.revisedBy.name.indexOf("<") - 1
-                    )}:</b><br> ${comment.text.htmlize()}</div>`;
-                  } else {
-                    insertText += `<div class="history"><b>${moment(
-                      comment.revisedDate
-                    ).format(localeTime)} ${
-                      comment.revisedBy.displayName
-                    }:</b><br> ${comment.text.htmlize()}</div>`;
-                  }
-                });
-              }
-            }
-          });
-          insertText += "</div>";
-          return insertText;
+
+          let result = {
+            "type": item.fields["System.WorkItemType"],
+            "title": item.fields["System.Title"],
+            "description":  item.fields["System.Description"],
+            "acceptance_criteria":  item.fields["Microsoft.VSTS.Common.AcceptanceCriteria"],
+            "id":  item.fields["System.Id"],
+          };
+
+          return result;
         }
       );
   });
