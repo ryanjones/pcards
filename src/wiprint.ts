@@ -97,7 +97,8 @@ const printWorkItems = {
                   console.log(page);
               });
               document.body.appendChild(workItems);
-              document.body.appendChild(card);
+              //document.body.appendChild(card);
+
                 setTimeout(() => {
                 window.focus(); // needed for IE
                 let ieprint = document.execCommand("print", false, null);
