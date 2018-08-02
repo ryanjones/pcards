@@ -2,7 +2,6 @@ var path = require("path");
 var webpack = require("webpack");
 
 module.exports = {
-    mode: "none",
     target: "web",
     entry: {
         wiprint: "./src/wiprint.ts",

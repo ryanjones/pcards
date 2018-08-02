@@ -1,8 +1,9 @@
 {
   "scripts": {
     "build": "npm run lint && npm run clean && npm run webpack",
-    "build:dev": "npm run lint && npm run clean && npm run webpack && npm run package:dev",
+    "build:dev": "npm run lint && npm run clean && npm run webpack:dev && npm run package:dev",
     "webpack": "webpack --progress --colors --config webpack.config.js --output-path ./dist -p",
+    "webpack:dev": "webpack --progress --colors --config webpack.dev.js --output-path ./dist -p",
     "postbuild": "npm run package",
     "package": "tfx extension create  --rev-version",
     "package:dev": "tfx extension create --overrides-file vss-extension.dev.json --rev-version",
@@ -20,7 +21,8 @@
     "tslint-loader": "^3.6.0",
     "typescript": "^2.8.3",
     "webpack": "^4.16.3",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack-merge": "^4.1.4"
   },
   "dependencies": {
     "@types/jquery": "^2.0.34",
