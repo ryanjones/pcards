@@ -85,31 +85,20 @@ const printWorkItems = {
             .then((pages: any) => {
 
               let card = cardTemplate({
-                username: "test"
+                number: "VSTS123",
+                title: "title",
+                description: "description"
               });
 
               const workItems = document.createElement("div");
-              // all work items
               workItems.setAttribute("id", "workitems");
-              // container for item and sizing boxes
-              let cardContainer = document.createElement("div");
-              cardContainer.setAttribute("id", "sizing-box");
-              cardContainer.style.border = "thick solid #00FFFF";
-              cardContainer.style.overflow = "hidden";
-              // work sizing box
-              let sizingBox = document.createElement("div");
-              sizingBox.setAttribute("id", "sizing-box");
-              sizingBox.setAttribute("style", "border:thick solid #00FFFF;float:left");
 
               pages.forEach(page => {
-                  cardContainer.innerHTML += page;
-                  cardContainer.innerHTML += sizingBox.innerHTML;
-                  workItems.innerHTML += cardContainer.innerHTML;
-                  cardContainer.innerHTML = "";
+                  console.log(page);
               });
               document.body.appendChild(workItems);
-
-              setTimeout(() => {
+              document.body.appendChild(card);
+                setTimeout(() => {
                 window.focus(); // needed for IE
                 let ieprint = document.execCommand("print", false, null);
                 if (!ieprint) {
