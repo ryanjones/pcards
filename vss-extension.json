@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "wiprint-dev",
-  "version": "2.2.62",
+  "version": "2.2.76",
   "name": "Work Item Print",
   "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from query toolbar or context menu.",
