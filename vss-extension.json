@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "wiprint",
-  "version": "2.2.54",
+  "version": "2.2.58",
   "name": "Work Item Print",
   "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from query toolbar or context menu.",
@@ -89,24 +89,6 @@
       "type": "ms.vss-web.action",
       "description": "Print a work item.",
       "targets": ["ms.vss-work-web.work-item-context-menu"],
-      "properties": {
-        "uri": "static/wiprint.html"
-      }
-    },
-    {
-      "id": "print-query-menu",
-      "type": "ms.vss-web.action",
-      "description": "Print a work item.",
-      "targets": ["ms.vss-work-web.work-item-query-menu"],
-      "properties": {
-        "uri": "static/wiprint.html"
-      }
-    },
-    {
-      "id": "print-query-toolbar",
-      "type": "ms.vss-web.action",
-      "description": "Print a work item.",
-      "targets": ["ms.vss-work-web.work-item-query-results-toolbar-menu"],
       "properties": {
         "uri": "static/wiprint.html"
       }

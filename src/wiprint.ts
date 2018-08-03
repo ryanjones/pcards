@@ -2,7 +2,8 @@ import WITClient = require("TFS/WorkItemTracking/RestClient");
 import Models = require("TFS/WorkItemTracking/Contracts");
 import moment = require("moment");
 import Q = require("q");
-const cardTemplate = require("./templates/work-item.handlebars");
+const userStoryTemplate = require("./templates/user-story.handlebars");
+const butTemplate = require("./templates/bug.handlebars");
 import { ContainerItemStatus } from "VSS/FileContainer/Contracts";
 
 const extensionContext = VSS.getExtensionContext();
@@ -87,14 +88,33 @@ const printWorkItems = {
               workItems.setAttribute("class", "container border");
 
               pages.forEach(page => {
-                let card = cardTemplate({
-                  number: page.id,
-                  title: page.title,
-                  description: page.description,
-                  acceptance_criteria: page.acceptance_criteria
-                });
+                let bugCard: any;
+                let userStoryCard: any;
 
-                workItems.innerHTML += card;
+                if (page.type === "Bug") {
+                  bugCard = butTemplate({
+                    number: page.id,
+                    title: page.title,
+                    repro_steps: page.repro_steps,
+                    system_info: page.system_info
+                  });
+                }
+
+                if (page.type === "User Story") {
+                  userStoryCard = userStoryTemplate({
+                    number: page.id,
+                    title: page.title,
+                    description: page.description,
+                    acceptance_criteria: page.acceptance_criteria
+                  });
+                }
+
+                if (page.type === "Bug") {
+                  workItems.innerHTML += bugCard;
+                }
+                if (page.type === "User Story") {
+                  workItems.innerHTML += userStoryCard;
+                }
               });
               document.body.appendChild(workItems);
 
@@ -166,27 +186,27 @@ function prepare(workItems: Models.WorkItem[]) {
           history: Models.WorkItemComments,
           allFields: Models.WorkItemField[]
         ) => {
+          let result = {};
 
-          if(item.fields["System.WorkItemType"] === "User Story") {
-            let result = {
+          if (item.fields["System.WorkItemType"] === "User Story") {
+            result = {
               "type": item.fields["System.WorkItemType"],
               "title": item.fields["System.Title"],
               "description":  item.fields["System.Description"],
               "acceptance_criteria":  item.fields["Microsoft.VSTS.Common.AcceptanceCriteria"],
               "id":  item.fields["System.Id"],
-            };  
+            };
           }
 
-          if(item.fields["System.WorkItemType"] === "Bug") {
-            let result = {
+          if (item.fields["System.WorkItemType"] === "Bug") {
+            result = {
               "type": item.fields["System.WorkItemType"],
               "title": item.fields["System.Title"],
-              "repro_steps":  item.fields["Microsoft.VSTS.TCM.ReproSteps"], // doesn't exist?
-              "system_info":  item.fields["Microsoft.VSTS.TCM.SystemInfo"], // doesn't exist?
+              "repro_steps":  item.fields["Microsoft.VSTS.TCM.ReproSteps"],
+              "system_info":  item.fields["Microsoft.VSTS.TCM.SystemInfo"],
               "id":  item.fields["System.Id"],
-            };  
+            };
           }
-
 
           return result;
         }
