@@ -2,6 +2,8 @@ import WITClient = require("TFS/WorkItemTracking/RestClient");
 import Models = require("TFS/WorkItemTracking/Contracts");
 import moment = require("moment");
 import Q = require("q");
+const userStoryTemplate = require("./templates/user-story.handlebars");
+const butTemplate = require("./templates/bug.handlebars");
 import { ContainerItemStatus } from "VSS/FileContainer/Contracts";
 
 const extensionContext = VSS.getExtensionContext();
@@ -82,10 +84,39 @@ const printWorkItems = {
               return Q.all(pages);
             })
             .then((pages: any) => {
-              const items = document.createElement("div");
-              items.setAttribute("id", "workitems");
-              pages.forEach(page => (items.innerHTML += page));
-              document.body.appendChild(items);
+              const workItems = document.createElement("div");
+              workItems.setAttribute("class", "container border");
+
+              pages.forEach(page => {
+                let bugCard: any;
+                let userStoryCard: any;
+
+                if (page.type === "Bug") {
+                  bugCard = butTemplate({
+                    number: page.id,
+                    title: page.title,
+                    repro_steps: page.repro_steps,
+                    system_info: page.system_info
+                  });
+                }
+
+                if (page.type === "User Story") {
+                  userStoryCard = userStoryTemplate({
+                    number: page.id,
+                    title: page.title,
+                    description: page.description,
+                    acceptance_criteria: page.acceptance_criteria
+                  });
+                }
+
+                if (page.type === "Bug") {
+                  workItems.innerHTML += bugCard;
+                }
+                if (page.type === "User Story") {
+                  workItems.innerHTML += userStoryCard;
+                }
+              });
+              document.body.appendChild(workItems);
 
               setTimeout(() => {
                 window.focus(); // needed for IE
@@ -93,62 +124,13 @@ const printWorkItems = {
                 if (!ieprint) {
                   (window as any).print();
                 }
-                items.parentElement.removeChild(items);
+                workItems.parentElement.removeChild(workItems);
               }, 1000);
             });
         },
         icon: "static/img/print14.png",
         text: menuItemText,
         title: menuItemText
-      } as IContributedMenuItem
-    ];
-  }
-};
-
-const printQueryToolbar = {
-  getMenuItems: (context: any) => {
-    return [
-      {
-        action: (actionContext: IActionContext) => {
-          return client
-            .queryByWiql(
-              { query: actionContext.query.wiql },
-              vssContext.project.name,
-              vssContext.team.name
-            )
-            .then(result => {
-              if (result.workItemRelations) {
-                return result.workItemRelations.map(wi => wi.target.id);
-              } else {
-                return result.workItems.map(wi => wi.id);
-              }
-            })
-            .then(wids => {
-              return getWorkItems(wids)
-                .then(workItems => prepare(workItems))
-                .then(pages => {
-                  return Q.all(pages);
-                })
-                .then((pages: any) => {
-                  const items = document.createElement("div");
-                  items.setAttribute("id", "workitems");
-                  pages.forEach(page => (items.innerHTML += page));
-                  document.body.appendChild(items);
-
-                  setTimeout(() => {
-                    window.focus(); // needed for IE
-                    let ieprint = document.execCommand("print", false, null);
-                    if (!ieprint) {
-                      (window as any).print();
-                    }
-                    items.parentElement.removeChild(items);
-                  }, 1000);
-                });
-            });
-        },
-        icon: "static/img/print16.png",
-        text: "Print All",
-        title: "Print All"
       } as IContributedMenuItem
     ];
   }
@@ -204,91 +186,29 @@ function prepare(workItems: Models.WorkItem[]) {
           history: Models.WorkItemComments,
           allFields: Models.WorkItemField[]
         ) => {
-          let insertText =
-            `<div class="item"><h2>${item.fields["System.WorkItemType"]} ` +
-            `${item.id} - ${item.fields["System.Title"]}</h2>`;
-          fields.forEach(field => {
-            const fieldRef = allFields.filter(
-              f => f.referenceName === field.referenceName
-            )[0];
-            if (item.fields[field.referenceName]) {
-              if (fieldRef.type) {
-                switch (fieldRef.type) {
-                  case Models.FieldType.DateTime:
-                    if (
-                      moment(item.fields[field.referenceName]).diff(
-                        moment(),
-                        "years"
-                      ) < 1000
-                    ) {
-                      insertText += `<p><b>${field.name}:</b> ${moment(
-                        item.fields[field.referenceName]
-                      ).format(localeTime)}</p>`;
-                    }
-                    break;
-                  case Models.FieldType.Html:
-                    insertText += `<p><b>${field.name}:</b> ${item.fields[
-                      field.referenceName
-                    ].htmlize()}</p>`;
-                    break;
-                  case Models.FieldType.History:
-                    if (history.count > 0) {
-                      insertText += `<p><b>${field.name}</b></p>`;
-                      history.comments.forEach(comment => {
-                        if (comment.revisedBy.name) {
-                          insertText += `<div class="history"><b>${moment(
-                            comment.revisedDate
-                          ).format(
-                            localeTime
-                          )} ${comment.revisedBy.name.substring(
-                            0,
-                            comment.revisedBy.name.indexOf("<") - 1
-                          )}:</b><br> ${comment.text.htmlize()}</div>`;
-                        } else {
-                          insertText += `<div class="history"><b>${moment(
-                            comment.revisedDate
-                          ).format(localeTime)} ${
-                            comment.revisedBy.displayName
-                          }:</b><br> ${comment.text.htmlize()}</div>`;
-                        }
-                      });
-                    }
-                    break;
-                  default:
-                    insertText += `<p><b>${field.name}:</b> ${
-                      item.fields[field.referenceName]
-                    }</p>`;
-                    break;
-                }
-              } else {
-                insertText += `<p><b>${field.name}:</b> ${
-                  item.fields[field.referenceName]
-                }</p>`;
-              }
-            } else if (field.referenceName === "System.History") {
-              if (history.count > 0) {
-                insertText += `<p><b>${field.name}</b></p>`;
-                history.comments.forEach(comment => {
-                  if (comment.revisedBy.name) {
-                    insertText += `<div class="history"><b>${moment(
-                      comment.revisedDate
-                    ).format(localeTime)} ${comment.revisedBy.name.substring(
-                      0,
-                      comment.revisedBy.name.indexOf("<") - 1
-                    )}:</b><br> ${comment.text.htmlize()}</div>`;
-                  } else {
-                    insertText += `<div class="history"><b>${moment(
-                      comment.revisedDate
-                    ).format(localeTime)} ${
-                      comment.revisedBy.displayName
-                    }:</b><br> ${comment.text.htmlize()}</div>`;
-                  }
-                });
-              }
-            }
-          });
-          insertText += "</div>";
-          return insertText;
+          let result = {};
+
+          if (item.fields["System.WorkItemType"] === "User Story") {
+            result = {
+              "type": item.fields["System.WorkItemType"],
+              "title": item.fields["System.Title"],
+              "description":  item.fields["System.Description"],
+              "acceptance_criteria":  item.fields["Microsoft.VSTS.Common.AcceptanceCriteria"],
+              "id":  item.fields["System.Id"],
+            };
+          }
+
+          if (item.fields["System.WorkItemType"] === "Bug") {
+            result = {
+              "type": item.fields["System.WorkItemType"],
+              "title": item.fields["System.Title"],
+              "repro_steps":  item.fields["Microsoft.VSTS.TCM.ReproSteps"],
+              "system_info":  item.fields["Microsoft.VSTS.TCM.SystemInfo"],
+              "id":  item.fields["System.Id"],
+            };
+          }
+
+          return result;
         }
       );
   });
@@ -299,16 +219,4 @@ VSS.register(
     extensionContext.extensionId
   }.print-work-item`,
   printWorkItems
-);
-VSS.register(
-  `${extensionContext.publisherId}.${
-    extensionContext.extensionId
-  }.print-query-toolbar`,
-  printQueryToolbar
-);
-VSS.register(
-  `${extensionContext.publisherId}.${
-    extensionContext.extensionId
-  }.print-query-menu`,
-  printQueryToolbar
 );
