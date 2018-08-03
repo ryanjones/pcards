@@ -116,55 +116,6 @@ const printWorkItems = {
   }
 };
 
-const printQueryToolbar = {
-  getMenuItems: (context: any) => {
-    return [
-      {
-        action: (actionContext: IActionContext) => {
-          return client
-            .queryByWiql(
-              { query: actionContext.query.wiql },
-              vssContext.project.name,
-              vssContext.team.name
-            )
-            .then(result => {
-              if (result.workItemRelations) {
-                return result.workItemRelations.map(wi => wi.target.id);
-              } else {
-                return result.workItems.map(wi => wi.id);
-              }
-            })
-            .then(wids => {
-              return getWorkItems(wids)
-                .then(workItems => prepare(workItems))
-                .then(pages => {
-                  return Q.all(pages);
-                })
-                .then((pages: any) => {
-                  const items = document.createElement("div");
-                  items.setAttribute("id", "workitems");
-                  pages.forEach(page => (items.innerHTML += page));
-                  document.body.appendChild(items);
-
-                  setTimeout(() => {
-                    window.focus(); // needed for IE
-                    let ieprint = document.execCommand("print", false, null);
-                    if (!ieprint) {
-                      (window as any).print();
-                    }
-                    items.parentElement.removeChild(items);
-                  }, 1000);
-                });
-            });
-        },
-        icon: "static/img/print16.png",
-        text: "Print All",
-        title: "Print All"
-      } as IContributedMenuItem
-    ];
-  }
-};
-
 // Promises
 function getWorkItems(wids: number[]): IPromise<Models.WorkItem[]> {
   return client.getWorkItems(
@@ -216,13 +167,26 @@ function prepare(workItems: Models.WorkItem[]) {
           allFields: Models.WorkItemField[]
         ) => {
 
-          let result = {
-            "type": item.fields["System.WorkItemType"],
-            "title": item.fields["System.Title"],
-            "description":  item.fields["System.Description"],
-            "acceptance_criteria":  item.fields["Microsoft.VSTS.Common.AcceptanceCriteria"],
-            "id":  item.fields["System.Id"],
-          };
+          if(item.fields["System.WorkItemType"] === "User Story") {
+            let result = {
+              "type": item.fields["System.WorkItemType"],
+              "title": item.fields["System.Title"],
+              "description":  item.fields["System.Description"],
+              "acceptance_criteria":  item.fields["Microsoft.VSTS.Common.AcceptanceCriteria"],
+              "id":  item.fields["System.Id"],
+            };  
+          }
+
+          if(item.fields["System.WorkItemType"] === "Bug") {
+            let result = {
+              "type": item.fields["System.WorkItemType"],
+              "title": item.fields["System.Title"],
+              "repro_steps":  item.fields["Microsoft.VSTS.TCM.ReproSteps"], // doesn't exist?
+              "system_info":  item.fields["Microsoft.VSTS.TCM.SystemInfo"], // doesn't exist?
+              "id":  item.fields["System.Id"],
+            };  
+          }
+
 
           return result;
         }
@@ -235,16 +199,4 @@ VSS.register(
     extensionContext.extensionId
   }.print-work-item`,
   printWorkItems
-);
-VSS.register(
-  `${extensionContext.publisherId}.${
-    extensionContext.extensionId
-  }.print-query-toolbar`,
-  printQueryToolbar
-);
-VSS.register(
-  `${extensionContext.publisherId}.${
-    extensionContext.extensionId
-  }.print-query-menu`,
-  printQueryToolbar
 );
