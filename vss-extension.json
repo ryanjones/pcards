@@ -1,9 +1,9 @@
 {
   "manifestVersion": 1,
   "id": "pcards",
-  "version": "1.0.9",
+  "version": "1.0.15",
   "name": "Pretty Cards",
-  "scopes": ["vso.work"],
+  "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from query toolbar or context menu.",
   "publisher": "Ryan",
   "public": true,
