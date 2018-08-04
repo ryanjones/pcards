@@ -4,8 +4,7 @@ var webpack = require("webpack");
 module.exports = {
     target: "web",
     entry: {
-        pcards: "./src/pcards.ts",
-        "pcards-admin": "./src/pcards-admin.ts"
+        pcards: "./src/pcards.ts"
     },
     devtool: "source-map",
     output: {

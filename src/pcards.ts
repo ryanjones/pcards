@@ -67,9 +67,9 @@ String.prototype.htmlize = function(this: string) {
 
 const printWorkItems = {
   getMenuItems: (context: any) => {
-    let menuItemText = "Print Pretty";
+    let menuItemText = "Pretty Card";
     if (context.workItemIds && context.workItemIds.length > 1) {
-      menuItemText = "Print Pretty Selection";
+      menuItemText = "Pretty Cards";
     }
 
     return [

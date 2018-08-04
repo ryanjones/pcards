@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "pcards",
-  "version": "1.0.7",
+  "version": "1.0.15",
   "name": "Pretty Cards",
   "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from query toolbar or context menu.",
@@ -59,10 +59,6 @@
       "addressable": true
     },
     {
-      "path": "static/pcards-admin.html",
-      "addressable": true
-    },
-    {
       "path": "node_modules/vss-web-extension-sdk/lib",
       "addressable": true,
       "packagePath": "lib"
@@ -91,16 +87,6 @@
       "targets": ["ms.vss-work-web.work-item-context-menu"],
       "properties": {
         "uri": "static/pcards.html"
-      }
-    },
-    {
-      "id": "pcards-admin",
-      "type": "ms.vss-web.hub",
-      "targets": ["ms.vss-work-web.work-hub-group"],
-      "properties": {
-        "name": "Work Item Print",
-        "order": 9999,
-        "uri": "static/pcards-admin.html"
       }
     }
   ]
