@@ -1,6 +1,6 @@
 # pcards
 
-Print work items from nearly anywhere you can see them. Limit is ~330.
+Print work items in a format great for agile/scrum boards!
 
 ## How To Contribute
 
@@ -9,3 +9,7 @@ Print work items from nearly anywhere you can see them. Limit is ~330.
 3. Clone the repository
 4. `npm install`
 5. Build with `npm run build` and upload to your VSTS/TFS
+
+## Credits
+
+Based on ![WIPrint](https://github.com/MrTarantula/WIPrint)
