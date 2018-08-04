@@ -67,9 +67,9 @@ String.prototype.htmlize = function(this: string) {
 
 const printWorkItems = {
   getMenuItems: (context: any) => {
-    let menuItemText = "Print";
+    let menuItemText = "Print Pretty";
     if (context.workItemIds && context.workItemIds.length > 1) {
-      menuItemText = "Print Selection";
+      menuItemText = "Print Pretty Selection";
     }
 
     return [
@@ -156,7 +156,7 @@ function getFields(
   return VSS.getService(VSS.ServiceIds.ExtensionData).then(
     (service: IExtensionDataService) => {
       return service.getValue<Models.WorkItemTypeFieldInstance[]>(
-        `wiprint-${workItem.fields["System.WorkItemType"].sanitize()}`,
+        `pcards-${workItem.fields["System.WorkItemType"].sanitize()}`,
         {
           scopeType: "user",
           defaultValue: dummy as Models.WorkItemTypeFieldInstance[]

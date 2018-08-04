@@ -4,8 +4,8 @@ var webpack = require("webpack");
 module.exports = {
     target: "web",
     entry: {
-        wiprint: "./src/wiprint.ts",
-        "wiprint-admin": "./src/wiprint-admin.ts"
+        pcards: "./src/pcards.ts",
+        "pcards-admin": "./src/pcards-admin.ts"
     },
     devtool: "source-map",
     output: {

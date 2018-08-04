@@ -1,4 +1,4 @@
-# WIPrint
+# pcards
 
 Print work items from nearly anywhere you can see them. Limit is ~330.
 

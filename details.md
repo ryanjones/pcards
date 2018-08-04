@@ -41,7 +41,7 @@ Right-click on a query and select `Print All`.
 
 ![Print work items in a query](static/img/query-context.gif)
 
-### [Code contributions are welcome](https://github.com/mrtarantula/wiprint)
+### [Code contributions are welcome](https://github.com/ryanjones/pcards)
 
 ## Changelog
 
