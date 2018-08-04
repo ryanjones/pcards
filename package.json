@@ -33,7 +33,7 @@
     "office-ui-fabric-js": "^1.4.0",
     "vss-web-extension-sdk": "5.131.0"
   },
-  "name": "wiprint",
+  "name": "pcards",
   "private": true,
   "version": "0.0.0"
 }

@@ -115,7 +115,7 @@ function refreshData(name: string): void {
     })[0];
     $(`#type-${name.sanitize()}`).addClass("selected");
 
-    key = `wiprint-${activeType.name.sanitize()}`;
+    key = `pcards-${activeType.name.sanitize()}`;
 
     $("#allList").html("");
     allFields.splice(0, allFields.length);

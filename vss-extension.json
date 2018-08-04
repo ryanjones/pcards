@@ -1,12 +1,12 @@
 {
   "manifestVersion": 1,
-  "id": "wiprint-dev",
-  "version": "2.2.76",
-  "name": "Work Item Print",
+  "id": "pcards",
+  "version": "1.0.7",
+  "name": "Pretty Cards",
   "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from query toolbar or context menu.",
   "publisher": "Ryan",
-  "public": false,
+  "public": true,
   "icons": {
     "default": "static/img/logo.png"
   },
@@ -31,15 +31,15 @@
   },
   "links": {
     "support": {
-      "uri": "https://github.com/mrtarantula/wiprint/issues"
+      "uri": "https://github.com/ryanjones/pcards/issues"
     },
     "repository": {
-      "uri": "https://github.com/mrtarantula/wiprint"
+      "uri": "https://github.com/ryanjones/pcards"
     }
   },
   "repository": {
     "type": "git",
-    "uri": "https://github.com/mrtarantula/wiprint"
+    "uri": "https://github.com/ryanjones/pcards"
   },
   "branding": {
     "color": "rgb(255, 255, 255)",
@@ -55,11 +55,11 @@
       "addressable": true
     },
     {
-      "path": "static/wiprint.html",
+      "path": "static/pcards.html",
       "addressable": true
     },
     {
-      "path": "static/wiprint-admin.html",
+      "path": "static/pcards-admin.html",
       "addressable": true
     },
     {
@@ -90,17 +90,17 @@
       "description": "Print a work item.",
       "targets": ["ms.vss-work-web.work-item-context-menu"],
       "properties": {
-        "uri": "static/wiprint.html"
+        "uri": "static/pcards.html"
       }
     },
     {
-      "id": "wiprint-admin",
+      "id": "pcards-admin",
       "type": "ms.vss-web.hub",
       "targets": ["ms.vss-work-web.work-hub-group"],
       "properties": {
         "name": "Work Item Print",
         "order": 9999,
-        "uri": "static/wiprint-admin.html"
+        "uri": "static/pcards-admin.html"
       }
     }
   ]
