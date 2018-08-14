@@ -2,13 +2,9 @@
 
 Print work items in a format great for agile/scrum boards!
 
-## Supported Browsers
+## Notes
 
-- Chrome
-
-## Supported platform
-
-- Visual Studio Team Services
+See details.md
 
 ## How To Contribute
 
