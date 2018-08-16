@@ -19,6 +19,11 @@ Only supports user stories and bugs.
 ![User story card](static/img/pretty_card_user_story.png)
 ![Bug card](static/img/pretty_card_bug.png)
 
+## Browser support
+
+- Chrome
+
 ## Credits
 
-Based on [WIPrint](https://github.com/MrTarantula/WIPrint)
+- Based on [WIPrint](https://github.com/MrTarantula/WIPrint)
+- Dave Van Vliet - Card Layout

@@ -16,4 +16,5 @@ See details.md
 
 ## Credits
 
-Based on ![WIPrint](https://github.com/MrTarantula/WIPrint)
+- Based on [WIPrint](https://github.com/MrTarantula/WIPrint)
+- Dave Van Vliet - Card Layout
