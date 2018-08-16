@@ -3,7 +3,7 @@ import Models = require("TFS/WorkItemTracking/Contracts");
 import moment = require("moment");
 import Q = require("q");
 const userStoryTemplate = require("./templates/user-story.handlebars");
-const butTemplate = require("./templates/bug.handlebars");
+const bugTemplate = require("./templates/bug.handlebars");
 import { ContainerItemStatus } from "VSS/FileContainer/Contracts";
 
 const extensionContext = VSS.getExtensionContext();
@@ -92,7 +92,7 @@ const printWorkItems = {
                 let userStoryCard: any;
 
                 if (page.type === "Bug") {
-                  bugCard = butTemplate({
+                  bugCard = bugTemplate({
                     number: page.id,
                     title: page.title,
                     repro_steps: page.repro_steps,

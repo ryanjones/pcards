@@ -1,10 +1,10 @@
 {
   "manifestVersion": 1,
   "id": "pcards",
-  "version": "1.0.15",
+  "version": "1.0.30",
   "name": "Pretty Cards",
   "scopes": ["vso.work", "vso.extension.data_write"],
-  "description": "Print work items from query toolbar or context menu.",
+  "description": "Print work items from the context menu.",
   "publisher": "Ryan",
   "public": true,
   "icons": {
@@ -13,10 +13,6 @@
   "targets": [
     {
       "id": "Microsoft.VisualStudio.Services"
-    },
-    {
-      "id": "Microsoft.TeamFoundation.Server",
-      "version": "[15.0,)"
     }
   ],
   "categories": ["Plan and track"],
