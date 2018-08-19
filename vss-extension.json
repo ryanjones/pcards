@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "pcards",
-  "version": "1.0.30",
+  "version": "1.0.35",
   "name": "Pretty Cards",
   "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from the context menu.",

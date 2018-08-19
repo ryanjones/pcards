@@ -115,6 +115,9 @@ const printWorkItems = {
                 if (page.type === "User Story") {
                   workItems.innerHTML += userStoryCard;
                 }
+                if (page.type !== "User Story" && page.type !== "Bug") {
+                  workItems.innerHTML += "<div class='container'>Work item type not supported. Submit pull requests here: https://github.com/ryanjones/pcards</div>";
+                }
               });
               document.body.appendChild(workItems);
 
