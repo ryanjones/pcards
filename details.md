@@ -25,6 +25,10 @@ Currently only supports user stories and bugs.
 
 ## Changelog
 
+### August 25,2018 (1.0.40)
+
+- Maintenance release
+
 ### August 18,2018 (1.0.35)
 
 - Display error within the print preview if a template isn't supported.

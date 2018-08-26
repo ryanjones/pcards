@@ -13,8 +13,7 @@ module.exports = {
         sourceMapFilename: "[file].map"
     },
     externals: [{
-        "q": true,
-        "moment": true
+        "q": true
     },
         /^VSS\/.*/, /^TFS\/.*/
     ],

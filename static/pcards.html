@@ -121,12 +121,7 @@
         // Initialize framework
         VSS.init({
             explicitNotifyLoaded: true,
-            usePlatformScripts: true,
-            moduleLoaderConfig: {
-                paths: {
-                    "moment": "lib/moment.min"
-                }
-            }
+            usePlatformScripts: true
         });
         // Load main entry point for extension
         VSS.require(["dist/pcards"], function (pcards) {

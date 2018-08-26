@@ -1,7 +1,7 @@
 {
   "manifestVersion": 1,
   "id": "pcards",
-  "version": "1.0.35",
+  "version": "1.0.40",
   "name": "Pretty Cards",
   "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from the context menu.",
@@ -56,11 +56,6 @@
     },
     {
       "path": "node_modules/vss-web-extension-sdk/lib",
-      "addressable": true,
-      "packagePath": "lib"
-    },
-    {
-      "path": "node_modules/moment/min",
       "addressable": true,
       "packagePath": "lib"
     },
