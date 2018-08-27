@@ -3,6 +3,7 @@ import Models = require("TFS/WorkItemTracking/Contracts");
 import Q = require("q");
 const userStoryTemplate = require("./templates/user-story.handlebars");
 const bugTemplate = require("./templates/bug.handlebars");
+const taskTemplate = require("./templates/task.handlebars");
 
 const extensionContext = VSS.getExtensionContext();
 const client = WITClient.getClient();
@@ -50,6 +51,7 @@ const printWorkItems = {
               pages.forEach(page => {
                 let bugCard: any;
                 let userStoryCard: any;
+                let taskCard: any;
 
                 if (page.type === "Bug") {
                   bugCard = bugTemplate({
@@ -69,13 +71,24 @@ const printWorkItems = {
                   });
                 }
 
+                if (page.type === "Task") {
+                  taskCard = taskTemplate({
+                    number: page.id,
+                    title: page.title,
+                    description: page.description
+                  });
+                }
+
                 if (page.type === "Bug") {
                   workItems.innerHTML += bugCard;
                 }
                 if (page.type === "User Story") {
                   workItems.innerHTML += userStoryCard;
                 }
-                if (page.type !== "User Story" && page.type !== "Bug") {
+                if (page.type === "Task") {
+                  workItems.innerHTML += taskCard;
+                }
+                if (page.type !== "User Story" && page.type !== "Bug" && page.type !== "Task") {
                   workItems.innerHTML += "<div class='container'>Work item type not supported. Submit pull requests here: https://github.com/ryanjones/pcards</div>";
                 }
               });
@@ -119,7 +132,7 @@ function prepare(workItems: Models.WorkItem[]) {
         "title": item.fields["System.Title"],
         "description":  item.fields["System.Description"],
         "acceptance_criteria":  item.fields["Microsoft.VSTS.Common.AcceptanceCriteria"],
-        "id":  item.fields["System.Id"],
+        "id":  item.fields["System.Id"]
       };
     }
 
@@ -129,7 +142,16 @@ function prepare(workItems: Models.WorkItem[]) {
         "title": item.fields["System.Title"],
         "repro_steps":  item.fields["Microsoft.VSTS.TCM.ReproSteps"],
         "system_info":  item.fields["Microsoft.VSTS.TCM.SystemInfo"],
-        "id":  item.fields["System.Id"],
+        "id":  item.fields["System.Id"]
+      };
+    }
+
+    if (item.fields["System.WorkItemType"] === "Task") {
+      result = {
+        "type": item.fields["System.WorkItemType"],
+        "title": item.fields["System.Title"],
+        "description":  item.fields["System.Description"],
+        "id":  item.fields["System.Id"]
       };
     }
 

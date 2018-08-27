@@ -14,16 +14,25 @@ Print work items in a way that works great for agile/scrum boards.
 
 ## Templates
 
-Currently only supports user stories and bugs.
+Currently supports the following work items:
+
+- User Story
+- Bug
+- Task
 
 ![User story card](static/img/pretty_card_user_story.png)
 ![Bug card](static/img/pretty_card_bug.png)
+![Task card](static/img/pretty_card_task.png)
 
 ## Browser support
 
-- Chrome
+- Chrome (lastest version)
 
 ## Changelog
+
+### August 26,2018 (1.0.47)
+
+- Added task template
 
 ### August 25,2018 (1.0.40)
 
