@@ -26,7 +26,7 @@ Currently supports the following work items:
 
 ## Browser support
 
-- Chrome (lastest version)
+- Chrome (latest version)
 
 ## Changelog
 
