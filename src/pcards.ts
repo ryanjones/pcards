@@ -102,7 +102,7 @@ const printWorkItems = {
                 if (page.type === "Technical Debt") {
                   workItems.innerHTML += techDebtCard;
                 }
-                if (page.type !== "User Story" && page.type !== "Bug" && page.type !== "Task") {
+                if (page.type !== "User Story" && page.type !== "Bug" && page.type !== "Task" && page.type !== "Technical Debt") {
                   workItems.innerHTML += `<div class='container'>Work item type (${page.type}) not supported. Submit pull requests here: https://github.com/ryanjones/pcards</div>`;
                 }
               });
