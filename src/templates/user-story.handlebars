@@ -1,43 +1,33 @@
 <div class="container border-blue">
   <div class="title-and-estimate-container">
     <div class="title-container">
+        <div class="vsts-number">
+          <strong>{{number}}</strong>
+        </div>
       <div class="title-text">
-        <strong>Title:&nbsp;</strong>{{title}}
+        {{title}}
       </div>
     </div>
-    <div class="estimate-container border-blue"></div>
-  </div>
-  <div class="userstory-and-discipline-container">
-    <div class="user-story"> 
-      <strong>Description:</strong><br/>
-      {{{description}}}
-     </div>
-    <div class="discipline-container">
-      <div class="discipline">
-        <div class="description">Dev</div>
-        <div class="box border-blue"></div>
-      </div>
-      <div class="discipline">
-        <div class="description">UX</div>
-        <div class="box border-blue"></div>
-      </div>
+    <div class="estimate-container border-blue">
+      <div class="estimate-number">{{estimate}}</div>
     </div>
   </div>
   <div class="po-vsts-container">
     <div class="po">
-      <strong>Product Owner:</strong>
+      <strong>Assigned To:</strong><br/>
+      {{assigned_to}}
     </div>
-    <div class="vsts-number">
-      <strong>{{number}}</strong> 
+
+  </div>
+  <div class="po-path-container">
+    <hr>
+    <div class="vsts-area">
+        <strong>Area:</strong> {{area_path}}
+    </div>
+    <hr>
+    <div class="vsts-iteration">
+        <strong>Iteration:</strong> {{iteration_path}}
     </div>
   </div>
-  
-  <hr/>
-  
-  <div class="acceptance-criteria-container">
-    <div class="acceptance-criteria">
-      <strong>Acceptance Criteria:</strong><br/>
-        {{{acceptance_criteria}}}
-    </div>
-  </div>
+
 </div>

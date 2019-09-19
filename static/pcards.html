@@ -35,22 +35,36 @@
         .container {
             width: 620px;
             font-family: sans-serif;
-            page-break-after: always;
+            page-break-inside: avoid;
             margin-left: 15px;
             margin-top: 20px;
         }
 
         .title-and-estimate-container {
-            margin: 15px 15px 25px 15px;
+            margin: 15px 15px 5px 15px;
             display: flex;
             justify-content: space-between;
         }
 
         .estimate-container {
-            width: 100px;
-            height: 100px;
+            width: 75px;
+            height: 75px;
+            font-size:35px;
+            margin-left: 5px;
+            margin-top: 5px;
+            margin-bottom: 5px;
+            margin-right:5px;
+            
         }
-
+        .estimate-number {
+            width:60px;
+            height:60px;
+            margin-left:12px;
+            margin-right:12px;
+            margin-top:18px;
+            align-content: center;
+            vertical-align:middle;
+        }
         .userstory-and-discipline-container {
             margin: 15px;
             display: flex;
@@ -74,7 +88,7 @@
         }
 
         .title-text {
-            font-size: 25px;
+            font-size: 22px;
             margin-top: 5px;
             width: 440px;
         }
@@ -93,19 +107,28 @@
 
         .po {
             display: flex;
+            font-size: 18px;
         }
 
         .po-vsts-container {
             justify-content: space-between;
-            display: flex;
+            display:inline-flex;
             margin-left: 15px;
             margin-right: 15px;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
+        .po-path-container {
+            justify-content: space-between;
+            display: block;
+            margin-left: 15px;
+            margin-right: 15px;
+            margin-bottom: 15px;
+            font-size: small;
+        }
         .vsts-number {
             display: flex;
-            font-size: 40px;
+            font-size: 15px;
         }
 
         hr {

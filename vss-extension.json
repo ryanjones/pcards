@@ -1,12 +1,12 @@
 {
   "manifestVersion": 1,
-  "id": "pcards",
-  "version": "1.0.47",
-  "name": "Pretty Cards",
+  "id": "ppcards",
+  "version": "1.0.63",
+  "name": "Print Physical Card",
   "scopes": ["vso.work", "vso.extension.data_write"],
   "description": "Print work items from the context menu.",
-  "publisher": "Ryan",
-  "public": true,
+  "publisher": "OneLuckiDev",
+  "public": false,
   "icons": {
     "default": "static/img/logo.png"
   },
@@ -15,8 +15,8 @@
       "id": "Microsoft.VisualStudio.Services"
     }
   ],
-  "categories": ["Plan and track"],
-  "tags": ["print", "work items"],
+  "categories": ["Azure Boards"],
+  "tags": ["print", "work items", "cards", "physical cards"],
   "content": {
     "details": {
       "path": "details.md"
@@ -27,19 +27,19 @@
   },
   "links": {
     "support": {
-      "uri": "https://github.com/ryanjones/pcards/issues"
+      "uri": "https://github.com/jeffpriz/pcards/issues"
     },
     "repository": {
-      "uri": "https://github.com/ryanjones/pcards"
+      "uri": "https://github.com/jeffpriz/pcards"
     }
   },
   "repository": {
     "type": "git",
-    "uri": "https://github.com/ryanjones/pcards"
+    "uri": "https://github.com/jeffpriz/pcards"
   },
   "branding": {
-    "color": "rgb(255, 255, 255)",
-    "theme": "light"
+    "color": "rgb(27,160,225)",
+    "theme": "dark"
   },
   "files": [
     {

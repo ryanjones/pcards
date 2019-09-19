@@ -28,9 +28,9 @@ interface IActionContext {
 
 const printWorkItems = {
   getMenuItems: (context: any) => {
-    let menuItemText = "Pretty Card";
+    let menuItemText = "Print Physical Card";
     if (context.workItemIds && context.workItemIds.length > 1) {
-      menuItemText = "Pretty Cards";
+      menuItemText = "Print Physical Card";
     }
 
     return [
@@ -66,8 +66,20 @@ const printWorkItems = {
                   userStoryCard = userStoryTemplate({
                     number: page.id,
                     title: page.title,
-                    description: page.description,
-                    acceptance_criteria: page.acceptance_criteria
+                    estimate: page.estimate,
+                    assigned_to: page.assigned_to,
+                    area_path: page.area_path,
+                    iteration_path: page.iteration_path
+                  });
+                }
+                if (page.type === "Product Backlog Item") {
+                  userStoryCard = userStoryTemplate({
+                    number: page.id,
+                    title: page.title,
+                    estimate: page.estimate,
+                    assigned_to: page.assigned_to,
+                    area_path: page.area_path,
+                    iteration_path: page.iteration_path
                   });
                 }
 
@@ -85,11 +97,14 @@ const printWorkItems = {
                 if (page.type === "User Story") {
                   workItems.innerHTML += userStoryCard;
                 }
+                if (page.type === "Product Backlog Item") {
+                  workItems.innerHTML += userStoryCard;
+                }
                 if (page.type === "Task") {
                   workItems.innerHTML += taskCard;
                 }
-                if (page.type !== "User Story" && page.type !== "Bug" && page.type !== "Task") {
-                  workItems.innerHTML += "<div class='container'>Work item type not supported. Submit pull requests here: https://github.com/ryanjones/pcards</div>";
+                if (page.type !== "User Story" && page.type !== "Bug" && page.type !== "Task" && page.type !== "Product Backlog Item") {
+                  workItems.innerHTML += "<div class='container'>Work item type not supported. ... yet.... </div>";
                 }
               });
               document.body.appendChild(workItems);
@@ -130,9 +145,23 @@ function prepare(workItems: Models.WorkItem[]) {
       result = {
         "type": item.fields["System.WorkItemType"],
         "title": item.fields["System.Title"],
-        "description":  item.fields["System.Description"],
-        "acceptance_criteria":  item.fields["Microsoft.VSTS.Common.AcceptanceCriteria"],
-        "id":  item.fields["System.Id"]
+        "id":  item.fields["System.Id"],
+        "estimate" : item.fields["Microsoft.VSTS.Scheduling.StoryPoints"],
+        "assigned_to": item.fields["System.AssignedTo"],
+        "area_path": item.fields["System.AreaPath"],
+        "iteration_path": item.fields["System.IterationPath"]
+      };
+    }
+
+    if (item.fields["System.WorkItemType"] === "Product Backlog Item") {
+      result = {
+        "type": item.fields["System.WorkItemType"],
+        "title": item.fields["System.Title"],
+        "id":  item.fields["System.Id"],
+        "estimate" : item.fields["Microsoft.VSTS.Common.BusinessValue"],
+        "assigned_to": item.fields["System.AssignedTo"],
+        "area_path": item.fields["System.AreaPath"],
+        "iteration_path": item.fields["System.IterationPath"]
       };
     }
 
