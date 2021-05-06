@@ -27,7 +27,7 @@
   "dependencies": {
     "@types/jquery": "^2.0.34",
     "@types/q": "0.0.32",
-    "handlebars": "^4.0.11",
+    "handlebars": "^4.7.7",
     "handlebars-loader": "^1.7.0",
     "office-ui-fabric-js": "^1.4.0",
     "vss-web-extension-sdk": "5.131.0"
